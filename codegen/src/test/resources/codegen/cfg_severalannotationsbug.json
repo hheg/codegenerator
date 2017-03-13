@@ -1,0 +1,10 @@
+{
+	"classes":{
+		"codegen.TestObject": 
+		{
+			"classAnnotations" : ["@codegen.ValidTestObject", "@codegen.IdFields({\"startDate\",\"endDate\"})"],
+			"fieldAnnotations" : {"startDate" : ["@javax.validation.constraints.NotNull"]}
+		}
+	}
+
+}

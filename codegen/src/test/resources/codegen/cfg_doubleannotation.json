@@ -1,0 +1,1 @@
+{"classes":{"codegen.TestClass":{"classAnnotations":["@ClassAnnotation","@SecondClassAnnotation"],"methodAnnotations":{"method()":["@MethodAnnotation","@SecondMethodAnnotation"],"method(String,String)":["@MethodAnnotation","@SecondMethodAnnotation"]},"fieldAnnotations":{"field":["@FieldAnnotation","@SecondFieldAnnotation"]}}}}
