@@ -59,18 +59,18 @@ public class CodeGenerator {
 			}
 
 			final Map<String, List<AnnotationExpr>> fieldAnnotations = parseAnnotations(
-			        clazzContainer.getValue().getFieldAnnotations().entrySet());
+					clazzContainer.getValue().getFieldAnnotations().entrySet());
 			final Map<String, List<AnnotationExpr>> methodAnnotations = parseAnnotations(
-			        clazzContainer.getValue().getMethodAnnotations().entrySet());
+					clazzContainer.getValue().getMethodAnnotations().entrySet());
 
 			internalClasses.put(clazzContainer.getKey(),
-			        new InternalConfiguration.ClazzContainer(classAnnotations, fieldAnnotations, methodAnnotations));
+					new InternalConfiguration.ClazzContainer(classAnnotations, fieldAnnotations, methodAnnotations));
 		}
 		return new InternalConfiguration(internalClasses);
 	}
 
 	private Map<String, List<AnnotationExpr>> parseAnnotations(final Set<Entry<String, List<String>>> entrySet)
-	        throws ParseException {
+			throws ParseException {
 		final Map<String, List<AnnotationExpr>> map = new HashMap<String, List<AnnotationExpr>>();
 		for (Entry<String, List<String>> entry : entrySet) {
 			final String key = entry.getKey();
@@ -89,7 +89,7 @@ public class CodeGenerator {
 		final List<File> parsedFiles = new ArrayList<File>();
 		for (File file : files) {
 			try {
-				if(parse(file)){
+				if (parse(file)) {
 					parsedFiles.add(file);
 				}
 			} catch (ParseException e) {
@@ -116,7 +116,7 @@ public class CodeGenerator {
 		final CompilationUnit cu = JavaParser.parse(targetFile, encoding);
 		final ClassAnnotationVisitor visitor = new ClassAnnotationVisitor(config);
 		visitor.visit(cu, null);
-		if(visitor.hasChanged()){
+		if (visitor.hasChanged()) {
 			writeFile(cu, targetFile);
 		}
 		return visitor.hasChanged();
@@ -124,7 +124,7 @@ public class CodeGenerator {
 
 	private void writeFile(final CompilationUnit cu, final File targetFile) throws IOException {
 		final BufferedWriter newBufferedWriter = Files.newBufferedWriter(targetFile.toPath(), Charset.forName(encoding),
-		        StandardOpenOption.TRUNCATE_EXISTING);
+				StandardOpenOption.TRUNCATE_EXISTING);
 		try {
 			newBufferedWriter.write(cu.toString());
 		} finally {

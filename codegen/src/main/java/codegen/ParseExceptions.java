@@ -25,8 +25,8 @@ public class ParseExceptions extends Exception {
 	private static final long serialVersionUID = -3237176459897867344L;
 
 	private final List<ParseException> exceptions;
-	
-	public ParseExceptions(List<ParseException> exceptions){
+
+	public ParseExceptions(List<ParseException> exceptions) {
 		this.exceptions = exceptions;
 	}
 

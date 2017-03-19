@@ -41,8 +41,8 @@ class InternalConfiguration {
 		private final Map<String, List<AnnotationExpr>> fieldAnnotations = new HashMap<String, List<AnnotationExpr>>();
 
 		public ClazzContainer(final List<AnnotationExpr> classAnnotations,
-		        final Map<String, List<AnnotationExpr>> fieldAnnotations,
-		        final Map<String, List<AnnotationExpr>> methodAnnotations) {
+				final Map<String, List<AnnotationExpr>> fieldAnnotations,
+				final Map<String, List<AnnotationExpr>> methodAnnotations) {
 			Utils.assertParamNotNull(classAnnotations, "classAnnotations");
 			Utils.assertParamNotNull(fieldAnnotations, "fieldAnnotations");
 			Utils.assertParamNotNull(methodAnnotations, "methodAnnotations");

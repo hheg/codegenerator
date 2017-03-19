@@ -58,8 +58,8 @@ public class ClassAnnotationVisitorTest {
 		Map<String, InternalConfiguration.ClazzContainer> map = new HashMap<String, InternalConfiguration.ClazzContainer>();
 		ClassAnnotationVisitor visitor = new ClassAnnotationVisitor(new InternalConfiguration(map));
 		MethodDeclaration md = new MethodDeclaration(ModifierSet.PUBLIC, new ArrayList<AnnotationExpr>(),
-		        new ArrayList<TypeParameter>(), ASTHelper.VOID_TYPE, "method", new ArrayList<Parameter>(), 0,
-		        new ArrayList<ReferenceType>(), new BlockStmt());
+				new ArrayList<TypeParameter>(), ASTHelper.VOID_TYPE, "method", new ArrayList<Parameter>(), 0,
+				new ArrayList<ReferenceType>(), new BlockStmt());
 		String methodSignature = visitor.getMethodSignature(md);
 		assertEquals("method()", methodSignature);
 	}
@@ -71,8 +71,8 @@ public class ClassAnnotationVisitorTest {
 		List<Parameter> parameterList = new ArrayList<Parameter>();
 		parameterList.add(ASTHelper.createParameter(ASTHelper.createReferenceType("java.lang.String", 0), "string"));
 		MethodDeclaration md = new MethodDeclaration(ModifierSet.PUBLIC, new ArrayList<AnnotationExpr>(),
-		        new ArrayList<TypeParameter>(), ASTHelper.VOID_TYPE, "method", parameterList, 0,
-		        new ArrayList<ReferenceType>(), new BlockStmt());
+				new ArrayList<TypeParameter>(), ASTHelper.VOID_TYPE, "method", parameterList, 0,
+				new ArrayList<ReferenceType>(), new BlockStmt());
 		String methodSignature = visitor.getMethodSignature(md);
 		assertEquals("method(java.lang.String)", methodSignature);
 	}
@@ -85,8 +85,8 @@ public class ClassAnnotationVisitorTest {
 		parameterList.add(ASTHelper.createParameter(ASTHelper.createReferenceType("java.lang.String", 0), "string1"));
 		parameterList.add(ASTHelper.createParameter(ASTHelper.createReferenceType("java.lang.String", 0), "string2"));
 		MethodDeclaration md = new MethodDeclaration(ModifierSet.PUBLIC, new ArrayList<AnnotationExpr>(),
-		        new ArrayList<TypeParameter>(), ASTHelper.VOID_TYPE, "method", parameterList, 0,
-		        new ArrayList<ReferenceType>(), new BlockStmt());
+				new ArrayList<TypeParameter>(), ASTHelper.VOID_TYPE, "method", parameterList, 0,
+				new ArrayList<ReferenceType>(), new BlockStmt());
 		String methodSignature = visitor.getMethodSignature(md);
 		assertEquals("method(java.lang.String,java.lang.String)", methodSignature);
 	}
@@ -112,7 +112,7 @@ public class ClassAnnotationVisitorTest {
 		ClassOrInterfaceDeclaration ciod = (ClassOrInterfaceDeclaration) cu.getTypes().get(0);
 		ciod.getAnnotations().add(markerAnnotationExpr);
 		InternalConfiguration.ClazzContainer clazz = new InternalConfiguration.ClazzContainer(classAnnotations,
-		        new HashMap<String, List<AnnotationExpr>>(), new HashMap<String, List<AnnotationExpr>>());
+				new HashMap<String, List<AnnotationExpr>>(), new HashMap<String, List<AnnotationExpr>>());
 		map.put("test.TestClass", clazz);
 		ClassAnnotationVisitor visitor = new ClassAnnotationVisitor(new InternalConfiguration(map));
 		cu.accept(visitor, null);
@@ -135,18 +135,18 @@ public class ClassAnnotationVisitorTest {
 		bodyDeclaration.getAnnotations().add(markerAnnotationExpr);
 
 		InternalConfiguration.ClazzContainer clazz = new InternalConfiguration.ClazzContainer(
-		        new ArrayList<AnnotationExpr>(), fieldMap, new HashMap<String, List<AnnotationExpr>>());
+				new ArrayList<AnnotationExpr>(), fieldMap, new HashMap<String, List<AnnotationExpr>>());
 		map.put("test.TestClass", clazz);
 
 		ClassAnnotationVisitor visitor = new ClassAnnotationVisitor(new InternalConfiguration(map));
 		cu.accept(visitor, null);
-		
+
 		assertFalse(visitor.hasChanged());
 		assertTrue(bodyDeclaration.getAnnotations().toString(), bodyDeclaration.getAnnotations().size() == 1);
 	}
 
 	@Test
-	@Ignore // Ignoring because we overwrite the annotation for now 
+	@Ignore // Ignoring because we overwrite the annotation for now
 	public void testCheckAlreadyExistingAnnotationsMethodShouldNotChangeCurrentAnnotation() throws ParseException {
 		Map<String, InternalConfiguration.ClazzContainer> map = new HashMap<String, InternalConfiguration.ClazzContainer>();
 		List<AnnotationExpr> methodAnnotations = new ArrayList<AnnotationExpr>();
@@ -160,21 +160,22 @@ public class ClassAnnotationVisitorTest {
 		bodyDeclaration.getAnnotations().add(markerAnnotationExpr);
 
 		InternalConfiguration.ClazzContainer clazz = new InternalConfiguration.ClazzContainer(
-		        new ArrayList<AnnotationExpr>(), new HashMap<String, List<AnnotationExpr>>(), methodMap);
+				new ArrayList<AnnotationExpr>(), new HashMap<String, List<AnnotationExpr>>(), methodMap);
 		map.put("test.TestClass", clazz);
 		ClassAnnotationVisitor visitor = new ClassAnnotationVisitor(new InternalConfiguration(map));
-		
+
 		cu.accept(visitor, null);
-		
+
 		assertFalse(visitor.hasChanged());
 		assertTrue(bodyDeclaration.getAnnotations().toString(), bodyDeclaration.getAnnotations().size() == 1);
 	}
 
 	@Test
 	@Ignore // Ignoring because we overwrite the annotation for now
-	public void testCheckAlreadyExistingAnnotationsMethodWithAnnotationBodyShouldNotChangeExistingAnnotationWithBody() throws ParseException {
+	public void testCheckAlreadyExistingAnnotationsMethodWithAnnotationBodyShouldNotChangeExistingAnnotationWithBody()
+			throws ParseException {
 		Map<String, InternalConfiguration.ClazzContainer> map = new HashMap<String, InternalConfiguration.ClazzContainer>();
-		List<AnnotationExpr> methodAnnotations = new ArrayList<AnnotationExpr>();		
+		List<AnnotationExpr> methodAnnotations = new ArrayList<AnnotationExpr>();
 		NameExpr createNameExpr = ASTHelper.createNameExpr("Duplicate");
 		MarkerAnnotationExpr markerAnnotation = new MarkerAnnotationExpr(createNameExpr);
 		methodAnnotations.add(markerAnnotation);
@@ -182,65 +183,61 @@ public class ClassAnnotationVisitorTest {
 		methodMap.put("method()", methodAnnotations);
 
 		InternalConfiguration.ClazzContainer clazz = new InternalConfiguration.ClazzContainer(
-		        new ArrayList<AnnotationExpr>(), new HashMap<String, List<AnnotationExpr>>(), methodMap);
+				new ArrayList<AnnotationExpr>(), new HashMap<String, List<AnnotationExpr>>(), methodMap);
 		map.put("test.TestClass", clazz);
 		ClassAnnotationVisitor visitor = new ClassAnnotationVisitor(new InternalConfiguration(map));
-		
+
 		CompilationUnit cu = getParsedCompilationUnit();
 		ClassOrInterfaceDeclaration ciod = (ClassOrInterfaceDeclaration) cu.getTypes().get(0);
 		BodyDeclaration bodyDeclaration = ciod.getMembers().get(1);
-		
+
 		List<MemberValuePair> mvp = new ArrayList<MemberValuePair>();
 		mvp.add(new MemberValuePair("name", new StringLiteralExpr("value")));
-		NormalAnnotationExpr markerAnnotationExprWithBody = new NormalAnnotationExpr(createNameExpr,mvp);
+		NormalAnnotationExpr markerAnnotationExprWithBody = new NormalAnnotationExpr(createNameExpr, mvp);
 		bodyDeclaration.getAnnotations().add(markerAnnotationExprWithBody);
-		
+
 		cu.accept(visitor, null);
 
 		assertFalse(visitor.hasChanged());
 		assertTrue(bodyDeclaration.getAnnotations().toString(), bodyDeclaration.getAnnotations().size() == 1);
-		assertEquals(bodyDeclaration.getAnnotations().get(0),markerAnnotationExprWithBody);
+		assertEquals(bodyDeclaration.getAnnotations().get(0), markerAnnotationExprWithBody);
 	}
-	
+
 	@Test
-	public void testCheckAlreadyExistingAnnotationsWithoutAnnotationBody() throws ParseException{
+	public void testCheckAlreadyExistingAnnotationsWithoutAnnotationBody() throws ParseException {
 		Map<String, InternalConfiguration.ClazzContainer> map = new HashMap<String, InternalConfiguration.ClazzContainer>();
 		NameExpr createNameExpr = ASTHelper.createNameExpr("Duplicate");
-		List<AnnotationExpr> methodAnnotations = new ArrayList<AnnotationExpr>();		
+		List<AnnotationExpr> methodAnnotations = new ArrayList<AnnotationExpr>();
 		List<MemberValuePair> mvp = new ArrayList<MemberValuePair>();
 		mvp.add(new MemberValuePair("name", new StringLiteralExpr("value")));
-		NormalAnnotationExpr markerAnnotationExprWithBody = new NormalAnnotationExpr(createNameExpr,mvp);
-		
+		NormalAnnotationExpr markerAnnotationExprWithBody = new NormalAnnotationExpr(createNameExpr, mvp);
+
 		methodAnnotations.add(markerAnnotationExprWithBody);
 		Map<String, List<AnnotationExpr>> methodMap = new HashMap<String, List<AnnotationExpr>>();
 		methodMap.put("method()", methodAnnotations);
 
 		InternalConfiguration.ClazzContainer clazz = new InternalConfiguration.ClazzContainer(
-		        new ArrayList<AnnotationExpr>(), new HashMap<String, List<AnnotationExpr>>(), methodMap);
+				new ArrayList<AnnotationExpr>(), new HashMap<String, List<AnnotationExpr>>(), methodMap);
 		map.put("test.TestClass", clazz);
 		ClassAnnotationVisitor visitor = new ClassAnnotationVisitor(new InternalConfiguration(map));
-		
+
 		CompilationUnit cu = getParsedCompilationUnit();
 		ClassOrInterfaceDeclaration ciod = (ClassOrInterfaceDeclaration) cu.getTypes().get(0);
 		BodyDeclaration bodyDeclaration = ciod.getMembers().get(1);
 		MarkerAnnotationExpr markerAnnotation = new MarkerAnnotationExpr(createNameExpr);
 		bodyDeclaration.getAnnotations().add(markerAnnotation);
-		
+
 		cu.accept(visitor, null);
 
 		assertTrue(visitor.hasChanged());
 		assertTrue(bodyDeclaration.getAnnotations().toString(), bodyDeclaration.getAnnotations().size() == 1);
-		assertEquals(bodyDeclaration.getAnnotations().get(0),markerAnnotationExprWithBody);
+		assertEquals(bodyDeclaration.getAnnotations().get(0), markerAnnotationExprWithBody);
 	}
-	
+
 	private CompilationUnit getParsedCompilationUnit() throws ParseException {
 		/* @formatter:off */
-		String file = 
-				"package test;" +
-				"public class TestClass {" + 
-				"	public String field;" +
-		        " 	public void method(){}" + 
-				"}";
+		String file = "package test;" + "public class TestClass {" + "	public String field;"
+				+ " 	public void method(){}" + "}";
 		/* @formatter:on */
 		InputStream is = new ByteArrayInputStream(file.getBytes(StandardCharsets.UTF_8));
 		return JavaParser.parse(is);
@@ -253,7 +250,7 @@ public class ClassAnnotationVisitorTest {
 		ASTHelper.addTypeDeclaration(cu, cid);
 
 		FieldDeclaration fd = ASTHelper.createFieldDeclaration(ModifierSet.PUBLIC,
-		        ASTHelper.createReferenceType("String", 0), "field");
+				ASTHelper.createReferenceType("String", 0), "field");
 		ASTHelper.addMember(cid, fd);
 
 		MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "method");
@@ -265,7 +262,7 @@ public class ClassAnnotationVisitorTest {
 		params.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "param1"));
 		params.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "param2"));
 		MethodDeclaration methodTwoArgs = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "method",
-		        params);
+				params);
 		methodTwoArgs.setBody(new BlockStmt());
 		ASTHelper.addMember(cid, methodTwoArgs);
 

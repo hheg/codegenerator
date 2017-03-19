@@ -33,16 +33,16 @@ public class Configuration {
 	private final Map<String, ClazzContainer> classes = new HashMap<String, ClazzContainer>();
 	@JsonProperty
 	private String encoding;
-		
+
 	public ClazzContainer getClass(String name) {
 		return classes.get(name);
-	}	
+	}
 
-	Map<String,ClazzContainer> getClasses(){
+	Map<String, ClazzContainer> getClasses() {
 		return Collections.unmodifiableMap(classes);
 	}
-	
-	void setClass(String name, ClazzContainer clazz){
+
+	void setClass(String name, ClazzContainer clazz) {
 		classes.put(name, clazz);
 	}
 
@@ -56,10 +56,10 @@ public class Configuration {
 
 		public ClazzContainer() {
 			this.setClassAnnotations(new ArrayList<String>());
-			this.setMethodAnnotations(new HashMap<String,List<String>>());
-			this.setFieldAnnotations(new HashMap<String,List<String>>());
+			this.setMethodAnnotations(new HashMap<String, List<String>>());
+			this.setFieldAnnotations(new HashMap<String, List<String>>());
 		}
-		
+
 		public List<String> getClassAnnotations() {
 			return classAnnotations;
 		}
@@ -91,12 +91,12 @@ public class Configuration {
 		public void setFieldAnnotations(Map<String, List<String>> fieldAnnotations) {
 			this.fieldAnnotations = fieldAnnotations;
 		}
-		
-		List<String> putMethodAnnotations(String key, List<String> annotations){
+
+		List<String> putMethodAnnotations(String key, List<String> annotations) {
 			return getMethodAnnotations().put(key, annotations);
 		}
-		
-		List<String> putFieldAnnotations(String key, List<String> annotations){
+
+		List<String> putFieldAnnotations(String key, List<String> annotations) {
 			return getFieldAnnotations().put(key, annotations);
 		}
 
