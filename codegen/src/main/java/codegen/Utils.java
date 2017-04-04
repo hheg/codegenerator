@@ -17,9 +17,9 @@ package codegen;
 
 public class Utils {
 
-	static void assertParamNotNull(Object check,String paramName){
-		if(check == null){
-			throw new IllegalArgumentException(paramName+" is null");
+	static void assertParamNotNull(Object check, String paramName) {
+		if (check == null) {
+			throw new IllegalArgumentException(paramName + " is null");
 		}
 	}
 

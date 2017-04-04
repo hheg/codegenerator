@@ -105,365 +105,365 @@ import com.github.javaparser.ast.type.WildcardType;
 import com.github.javaparser.ast.visitor.GenericVisitor;
 
 class FQNVisitor implements GenericVisitor<String, Void> {
-	
+
 	public FQNVisitor(final Node startNode) {
-		if(startNode instanceof CompilationUnit){
+		if (startNode instanceof CompilationUnit) {
 			throw new IllegalStateException("Can't find out the FQN at the root node");
 		}
 	}
 
-	private String noop(Node n, Void arg){
+	private String noop(Node n, Void arg) {
 		final Node parentNode = n.getParentNode();
-		if(parentNode == null){
+		if (parentNode == null) {
 			return "";
 		}
 		return parentNode.accept(this, arg);
 	}
-	
+
 	public String visit(CompilationUnit n, Void arg) {
-		return n.getPackage().accept(this, null);		
+		return n.getPackage().accept(this, null);
 	}
 
-	public String visit(PackageDeclaration n, Void arg) {		
+	public String visit(PackageDeclaration n, Void arg) {
 		return n.getName().toString();
 	}
-	
+
 	public String visit(ClassOrInterfaceDeclaration n, Void arg) {
 		final String parent = n.getParentNode().accept(this, arg);
-		return parent+"."+n.getName();
+		return parent + "." + n.getName();
 	}
 
 	public String visit(EnumDeclaration n, Void arg) {
 		final String parent = n.getParentNode().accept(this, arg);
-		return parent+"."+n.getName();
+		return parent + "." + n.getName();
 	}
 
 	public String visit(ImportDeclaration n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(TypeParameter n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(LineComment n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(BlockComment n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(EmptyTypeDeclaration n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(EnumConstantDeclaration n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(AnnotationDeclaration n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(AnnotationMemberDeclaration n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(FieldDeclaration n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(VariableDeclarator n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(VariableDeclaratorId n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ConstructorDeclaration n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(MethodDeclaration n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(Parameter n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(MultiTypeParameter n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(EmptyMemberDeclaration n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(InitializerDeclaration n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(JavadocComment n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ClassOrInterfaceType n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(PrimitiveType n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ReferenceType n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(VoidType n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(WildcardType n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(UnknownType n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ArrayAccessExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ArrayCreationExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ArrayInitializerExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(AssignExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(BinaryExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(CastExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ClassExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ConditionalExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(EnclosedExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(FieldAccessExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(InstanceOfExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(StringLiteralExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(IntegerLiteralExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(LongLiteralExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(IntegerLiteralMinValueExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(LongLiteralMinValueExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(CharLiteralExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(DoubleLiteralExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(BooleanLiteralExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(NullLiteralExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(MethodCallExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(NameExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ObjectCreationExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(QualifiedNameExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ThisExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(SuperExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(UnaryExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(VariableDeclarationExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(MarkerAnnotationExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(SingleMemberAnnotationExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(NormalAnnotationExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(MemberValuePair n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ExplicitConstructorInvocationStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(TypeDeclarationStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(AssertStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(BlockStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(LabeledStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(EmptyStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ExpressionStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(SwitchStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(SwitchEntryStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(BreakStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ReturnStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(IfStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(WhileStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ContinueStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(DoStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ForeachStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ForStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(ThrowStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(SynchronizedStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(TryStmt n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(CatchClause n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(LambdaExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(MethodReferenceExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(TypeExpr n, Void arg) {
-		return noop(n,arg);
+		return noop(n, arg);
 	}
 
 	public String visit(IntersectionType arg0, Void arg1) {
-		return noop(arg0,arg1);
+		return noop(arg0, arg1);
 	}
 
 	public String visit(UnionType arg0, Void arg1) {
-		return noop(arg0,arg1);
+		return noop(arg0, arg1);
 	}
 
 }

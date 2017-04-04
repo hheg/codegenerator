@@ -54,9 +54,8 @@ public class CodeGeneratorTest {
 	private static final List<Pair<String>> files = new ArrayList<Pair<String>>();
 	{
 		files.add(new Pair<String>("src/test/resources/codegen/TestClass.java", "target/test/codegen/TestClass.java"));
-		files.add(new Pair<String>("src/test/resources/codegen/NestedTestClass.java",
-		        "target/test/codegen/NestedTestClass.java"));
-		files.add(new Pair<String>("src/test/resources/codegen/TestObject.java","target/test/codegen/TestObject.java"));		
+		files.add(new Pair<String>("src/test/resources/codegen/NestedTestClass.java","target/test/codegen/NestedTestClass.java"));
+		files.add(new Pair<String>("src/test/resources/codegen/TestObject.java", "target/test/codegen/TestObject.java"));
 	}
 
 	@Before
@@ -79,7 +78,7 @@ public class CodeGeneratorTest {
 		for (Pair<String> p : files) {
 			Path absolutePath = Paths.get(p.right).toAbsolutePath();
 			if (absolutePath.toFile().exists()) {
-				//Files.delete(absolutePath);
+				// Files.delete(absolutePath);
 			}
 		}
 	}
@@ -93,7 +92,7 @@ public class CodeGeneratorTest {
 		CompilationUnit expectedSource = getExpectedSource();
 		expectedSource.accept(new ClassAnnotationCreator("ClassAnnotation"), null);
 
-		assertEquals(expectedSource,JavaParser.parse(targetFile));
+		assertEquals(expectedSource, JavaParser.parse(targetFile));
 	}
 
 	@Test
@@ -103,9 +102,10 @@ public class CodeGeneratorTest {
 		CodeGenerator cg = new CodeGenerator(getFile("src/test/resources/codegen/cfg_field.json"));
 		assertTrue(cg.parse(targetFile));
 		CompilationUnit expectedSource = getExpectedSource();
-		expectedSource.accept(new FieldAnnotationCreator("field",new MarkerAnnotationExpr(ASTHelper.createNameExpr("FieldAnnotation"))), null);
+		expectedSource.accept(new FieldAnnotationCreator("field",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("FieldAnnotation"))), null);
 
-		assertEquals(expectedSource,JavaParser.parse(targetFile));
+		assertEquals(expectedSource, JavaParser.parse(targetFile));
 	}
 
 	@Test
@@ -115,9 +115,10 @@ public class CodeGeneratorTest {
 		CodeGenerator cg = new CodeGenerator(getFile("src/test/resources/codegen/cfg_method.json"));
 		assertTrue(cg.parse(targetFile));
 		CompilationUnit expectedSource = getExpectedSource();
-		expectedSource.accept(new MethodAnnotationCreator("method()",new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
+		expectedSource.accept(new MethodAnnotationCreator("method()",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
 
-		assertEquals(expectedSource,JavaParser.parse(targetFile));
+		assertEquals(expectedSource, JavaParser.parse(targetFile));
 	}
 
 	@Test
@@ -127,9 +128,10 @@ public class CodeGeneratorTest {
 		CodeGenerator cg = new CodeGenerator(getFile("src/test/resources/codegen/cfg_method2params.json"));
 		assertTrue(cg.parse(targetFile));
 		CompilationUnit expectedSource = getExpectedSource();
-		expectedSource.accept(new MethodAnnotationCreator("method(String,String)",new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
+		expectedSource.accept(new MethodAnnotationCreator("method(String,String)",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
 
-		assertEquals(expectedSource,JavaParser.parse(targetFile));
+		assertEquals(expectedSource, JavaParser.parse(targetFile));
 
 	}
 
@@ -140,12 +142,15 @@ public class CodeGeneratorTest {
 		CodeGenerator cg = new CodeGenerator(getFile("src/test/resources/codegen/cfg.json"));
 		assertTrue(cg.parse(targetFile));
 		CompilationUnit expectedSource = getExpectedSource();
-		expectedSource.accept(new MethodAnnotationCreator("method(String,String)",new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
-		expectedSource.accept(new MethodAnnotationCreator("method()",new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
-		expectedSource.accept(new FieldAnnotationCreator("field",new MarkerAnnotationExpr(ASTHelper.createNameExpr("FieldAnnotation"))), null);
+		expectedSource.accept(new MethodAnnotationCreator("method(String,String)",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
+		expectedSource.accept(new MethodAnnotationCreator("method()",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
+		expectedSource.accept(new FieldAnnotationCreator("field",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("FieldAnnotation"))), null);
 		expectedSource.accept(new ClassAnnotationCreator("ClassAnnotation"), null);
 
-		assertEquals(expectedSource,JavaParser.parse(targetFile));
+		assertEquals(expectedSource, JavaParser.parse(targetFile));
 	}
 
 	@Test
@@ -155,16 +160,22 @@ public class CodeGeneratorTest {
 		CodeGenerator cg = new CodeGenerator(getFile("src/test/resources/codegen/cfg_doubleannotation.json"));
 		assertTrue(cg.parse(targetFile));
 		CompilationUnit expectedSource = getExpectedSource();
-		expectedSource.accept(new MethodAnnotationCreator("method(String,String)",new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
-		expectedSource.accept(new MethodAnnotationCreator("method(String,String)",new MarkerAnnotationExpr(ASTHelper.createNameExpr("SecondMethodAnnotation"))), null);
-		expectedSource.accept(new MethodAnnotationCreator("method()",new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
-		expectedSource.accept(new MethodAnnotationCreator("method()",new MarkerAnnotationExpr(ASTHelper.createNameExpr("SecondMethodAnnotation"))), null);
-		expectedSource.accept(new FieldAnnotationCreator("field",new MarkerAnnotationExpr(ASTHelper.createNameExpr("FieldAnnotation"))), null);
-		expectedSource.accept(new FieldAnnotationCreator("field",new MarkerAnnotationExpr(ASTHelper.createNameExpr("SecondFieldAnnotation"))), null);
+		expectedSource.accept(new MethodAnnotationCreator("method(String,String)",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
+		expectedSource.accept(new MethodAnnotationCreator("method(String,String)",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("SecondMethodAnnotation"))), null);
+		expectedSource.accept(new MethodAnnotationCreator("method()",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
+		expectedSource.accept(new MethodAnnotationCreator("method()",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("SecondMethodAnnotation"))), null);
+		expectedSource.accept(new FieldAnnotationCreator("field",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("FieldAnnotation"))), null);
+		expectedSource.accept(new FieldAnnotationCreator("field",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("SecondFieldAnnotation"))), null);
 		expectedSource.accept(new ClassAnnotationCreator("ClassAnnotation"), null);
 		expectedSource.accept(new ClassAnnotationCreator("SecondClassAnnotation"), null);
 
-		assertEquals(expectedSource,JavaParser.parse(targetFile));
+		assertEquals(expectedSource, JavaParser.parse(targetFile));
 
 	}
 
@@ -175,10 +186,12 @@ public class CodeGeneratorTest {
 		CodeGenerator cg = new CodeGenerator(getFile("src/test/resources/codegen/cfgnested.json"));
 		assertTrue(cg.parse(targetFile));
 		CompilationUnit expectedSource = getExpectedNestedSource();
-		expectedSource.accept(new MethodAnnotationCreator("method()",new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
-		expectedSource.accept(new FieldAnnotationCreator("field",new MarkerAnnotationExpr(ASTHelper.createNameExpr("FieldAnnotation"))), null);
+		expectedSource.accept(new MethodAnnotationCreator("method()",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("MethodAnnotation"))), null);
+		expectedSource.accept(new FieldAnnotationCreator("field",
+				new MarkerAnnotationExpr(ASTHelper.createNameExpr("FieldAnnotation"))), null);
 		expectedSource.accept(new ClassAnnotationCreator("ClassAnnotation"), null);
-		assertEquals(expectedSource,JavaParser.parse(targetFile));
+		assertEquals(expectedSource, JavaParser.parse(targetFile));
 	}
 
 	@Test
@@ -188,19 +201,20 @@ public class CodeGeneratorTest {
 		assertTrue(cg.parse(targetFile));
 		CompilationUnit expectedSource = getExpectedSource();
 		List<MemberValuePair> pairs = new ArrayList<MemberValuePair>();
-		pairs.add(new MemberValuePair("name",new StringLiteralExpr("value")));
-		expectedSource.accept(new FieldAnnotationCreator("field",new NormalAnnotationExpr(ASTHelper.createNameExpr("FieldAnnotation"),pairs)), null);
-		
-		assertEquals(expectedSource,JavaParser.parse(targetFile));
+		pairs.add(new MemberValuePair("name", new StringLiteralExpr("value")));
+		expectedSource.accept(new FieldAnnotationCreator("field",
+				new NormalAnnotationExpr(ASTHelper.createNameExpr("FieldAnnotation"), pairs)), null);
+
+		assertEquals(expectedSource, JavaParser.parse(targetFile));
 	}
-	
+
 	@Test
-	public void testSeveralAnnotationsBug() throws ParseException, IOException{
+	public void testSeveralAnnotationsBug() throws ParseException, IOException {
 		File targetFile = getFile(files.get(2).right);
 		CodeGenerator cg = new CodeGenerator(getFile("src/test/resources/codegen/cfg_severalannotationsbug.json"));
 		assertTrue(cg.parse(targetFile));
 		File actualResult = getFile("src/test/resources/codegen/TestObjectResult.java");
-		assertEquals(JavaParser.parse(actualResult),JavaParser.parse(targetFile));
+		assertEquals(JavaParser.parse(actualResult), JavaParser.parse(targetFile));
 	}
 
 	private CompilationUnit getExpectedNestedSource() {
@@ -211,7 +225,7 @@ public class CodeGeneratorTest {
 		ASTHelper.addTypeDeclaration(cu, cid);
 
 		FieldDeclaration fd = ASTHelper.createFieldDeclaration(ModifierSet.PUBLIC,
-		        ASTHelper.createReferenceType("String", 0), "field");
+				ASTHelper.createReferenceType("String", 0), "field");
 		ASTHelper.addMember(cid, fd);
 
 		MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "method");
@@ -220,11 +234,11 @@ public class CodeGeneratorTest {
 		ASTHelper.addMember(cid, method);
 
 		ClassOrInterfaceDeclaration nid = new ClassOrInterfaceDeclaration(ModifierSet.PUBLIC | ModifierSet.STATIC,
-		        false, "InternalClass");
+				false, "InternalClass");
 		ASTHelper.addMember(cid, nid);
 
 		FieldDeclaration nfd = ASTHelper.createFieldDeclaration(ModifierSet.PUBLIC,
-		        ASTHelper.createReferenceType("String", 0), "field");
+				ASTHelper.createReferenceType("String", 0), "field");
 		ASTHelper.addMember(nid, nfd);
 
 		MethodDeclaration nmethod = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "method");
@@ -246,7 +260,7 @@ public class CodeGeneratorTest {
 		ASTHelper.addTypeDeclaration(cu, cid);
 
 		FieldDeclaration fd = ASTHelper.createFieldDeclaration(ModifierSet.PUBLIC,
-		        ASTHelper.createReferenceType("String", 0), "field");
+				ASTHelper.createReferenceType("String", 0), "field");
 		ASTHelper.addMember(cid, fd);
 
 		MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "method");
@@ -258,7 +272,7 @@ public class CodeGeneratorTest {
 		params.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "param1"));
 		params.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "param2"));
 		MethodDeclaration methodTwoArgs = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "method",
-		        params);
+				params);
 		methodTwoArgs.setBody(new BlockStmt());
 		ASTHelper.addMember(cid, methodTwoArgs);
 
@@ -301,6 +315,7 @@ public class CodeGeneratorTest {
 	private static class MethodAnnotationCreator extends VoidVisitorAdapter<Void> {
 		private final String method;
 		private final AnnotationExpr annotationExpr;
+
 		public MethodAnnotationCreator(String method, AnnotationExpr annotationExpr) {
 			this.method = method;
 			this.annotationExpr = annotationExpr;

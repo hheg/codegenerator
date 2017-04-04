@@ -66,7 +66,7 @@ public class ClassAnnotationVisitor extends VoidVisitorAdapter<Void> {
 			this.FQN = packageName + "." + n.getName();
 			final ClazzContainer clazz = this.config.getClass(this.FQN);
 			if (clazz != null && !clazz.getClassAnnotations().isEmpty()) {
-				hasChanged = normalize(n.getAnnotations(), clazz.getClassAnnotations());
+				hasChanged |= normalize(n.getAnnotations(), clazz.getClassAnnotations());
 			}
 			super.visit(n, arg);
 		} else {
@@ -80,7 +80,7 @@ public class ClassAnnotationVisitor extends VoidVisitorAdapter<Void> {
 			this.FQN = packageName + "." + n.getName();
 			final ClazzContainer clazz = this.config.getClass(this.FQN);
 			if (clazz != null && !clazz.getClassAnnotations().isEmpty()) {
-				hasChanged = normalize(n.getAnnotations(), clazz.getClassAnnotations());
+				hasChanged |= normalize(n.getAnnotations(), clazz.getClassAnnotations());
 			}
 			super.visit(n, arg);
 		} else {
@@ -97,7 +97,7 @@ public class ClassAnnotationVisitor extends VoidVisitorAdapter<Void> {
 				if (fieldName != null) {
 					List<AnnotationExpr> fieldAnnotations = clazz.getFieldAnnotations(fieldName);
 					if (!fieldAnnotations.isEmpty()) {
-						hasChanged = normalize(n.getAnnotations(), fieldAnnotations);
+						hasChanged |= normalize(n.getAnnotations(), fieldAnnotations);
 					}
 				}
 			}
@@ -112,31 +112,31 @@ public class ClassAnnotationVisitor extends VoidVisitorAdapter<Void> {
 			if (clazz != null) {
 				String methodSignature = getMethodSignature(n);
 				List<AnnotationExpr> methodAnnotations = clazz.getMethodAnnotations(methodSignature);
-				if (!methodAnnotations.isEmpty()) {					
-					hasChanged = normalize(n.getAnnotations(), methodAnnotations);
+				if (!methodAnnotations.isEmpty()) {
+					hasChanged |= normalize(n.getAnnotations(), methodAnnotations);
 				}
 			}
 		}
 		super.visit(n, arg);
 	}
-	
-	boolean normalize(final List<AnnotationExpr> source, final List<AnnotationExpr> newAnnotations){
+
+	boolean normalize(final List<AnnotationExpr> source, final List<AnnotationExpr> newAnnotations) {
 		boolean hasChanged = false;
-		final Map<String, AnnotationExpr> sourceMap = new HashMap<String,AnnotationExpr>();
+		final Map<String, AnnotationExpr> sourceMap = new HashMap<String, AnnotationExpr>();
 		for (AnnotationExpr annotationExpr : source) {
 			String accept = annotationExpr.accept(new AnnotationDeclarationBaseExtractor(), null);
-			sourceMap.put(accept, annotationExpr);			
+			sourceMap.put(accept, annotationExpr);
 		}
 		for (AnnotationExpr newAnnotation : newAnnotations) {
 			String name = newAnnotation.accept(new AnnotationDeclarationBaseExtractor(), null);
-			if(sourceMap.containsKey(name)){				
+			if (sourceMap.containsKey(name)) {
 				AnnotationExpr oldAnnotation = sourceMap.put(name, newAnnotation);
 				source.remove(oldAnnotation);
-				hasChanged = source.add(newAnnotation);
+				hasChanged |= source.add(newAnnotation);
 			} else {
-				hasChanged = source.add(newAnnotation);				
-			}			
-		}		
+				hasChanged |= source.add(newAnnotation);
+			}
+		}
 		return hasChanged;
 	}
 
@@ -161,22 +161,24 @@ public class ClassAnnotationVisitor extends VoidVisitorAdapter<Void> {
 			return n.getName();
 		}
 	}
-	
-	private class AnnotationDeclarationBaseExtractor extends GenericVisitorAdapter<String, Void>{
-		
+
+	private class AnnotationDeclarationBaseExtractor extends GenericVisitorAdapter<String, Void> {
+
 		@Override
-		public String visit(MarkerAnnotationExpr n, Void arg) {			
+		public String visit(MarkerAnnotationExpr n, Void arg) {
 			return n.getName().getName();
 		}
+
 		@Override
 		public String visit(NormalAnnotationExpr n, Void arg) {
-			return n.getName().toString();			
+			return n.getName().toString();
 		}
+
 		@Override
 		public String visit(SingleMemberAnnotationExpr n, Void arg) {
-			return n.getName().getName();			
+			return n.getName().getName();
 		}
-		
+
 	}
 
 	boolean checkEnclosingEquality(Node node) {

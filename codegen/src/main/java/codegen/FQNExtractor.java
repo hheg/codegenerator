@@ -20,13 +20,13 @@ import com.github.javaparser.ast.Node;
 public class FQNExtractor {
 
 	private final Node startNode;
-	
+
 	public FQNExtractor(final Node startNode) {
 		this.startNode = startNode;
 	}
-		
-	public String find(){
+
+	public String find() {
 		return startNode.accept(new FQNVisitor(startNode), null);
 	}
-	
+
 }
