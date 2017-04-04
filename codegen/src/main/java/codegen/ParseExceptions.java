@@ -18,19 +18,17 @@ package codegen;
 import java.util.Collections;
 import java.util.List;
 
-import com.github.javaparser.ParseException;
-
 public class ParseExceptions extends Exception {
 
 	private static final long serialVersionUID = -3237176459897867344L;
 
-	private final List<ParseException> exceptions;
-	
-	public ParseExceptions(List<ParseException> exceptions){
+	private final List<FileParseFaultResult> exceptions;
+
+	public ParseExceptions(List<FileParseFaultResult> exceptions) {
 		this.exceptions = exceptions;
 	}
 
-	public List<ParseException> getExceptions() {
+	public List<FileParseFaultResult> getExceptions() {
 		return Collections.unmodifiableList(exceptions);
 	}
 }
