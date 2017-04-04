@@ -85,7 +85,7 @@ public class CodeGenerator {
 	}
 
 	public List<File> parse(final List<File> files) throws IOException, ParseExceptions {
-		final List<ParseException> list = new ArrayList<ParseException>();
+		final List<FileParseFaultResult> list = new ArrayList<FileParseFaultResult>();
 		final List<File> parsedFiles = new ArrayList<File>();
 		for (File file : files) {
 			try {
@@ -93,7 +93,7 @@ public class CodeGenerator {
 					parsedFiles.add(file);
 				}
 			} catch (ParseException e) {
-				list.add(e);
+				list.add(new FileParseFaultResult(e, file.toString()));
 			}
 		}
 		if (!list.isEmpty()) {
