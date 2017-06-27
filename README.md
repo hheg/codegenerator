@@ -22,3 +22,22 @@ Example configuration:
     </executions>
   </plugin>
 ``` 
+Example configuration file
+```json
+{
+"classes":{
+	"codegen.NestedTestClass":
+		{
+			"classAnnotations":["@ClassAnnotation"],
+			"methodAnnotations":{"method()":["@MethodAnnotation"]},
+			"fieldAnnotations":{"field":["@FieldAnnotation"]}
+		},
+	"codegen.NestedTestClass.InternalClass":
+		{
+			"classAnnotations":["@ClassAnnotation"],
+			"methodAnnotations":{"method()":["@MethodAnnotation"]},
+			"fieldAnnotations":{"field":["@FieldAnnotation"]}
+		}
+	}
+}
+```
