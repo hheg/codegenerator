@@ -20,9 +20,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.nio.file.Paths;
 import java.util.Arrays;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -57,8 +57,8 @@ public class ConfigurationTest {
 		assertTrue(!clazz.getMethodAnnotations("method()").isEmpty());
 	}
 
-	private File getFile(String string) {
-		return Paths.get(string).toAbsolutePath().toFile();
+	private File getFile(String fileName) {
+		return FileUtils.getFile(fileName);
 	}
 
 }

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -176,7 +176,7 @@ public class FQNVisitorTest {
 				" 	public void method(){}"+
 				"}";
 		/* @formatter:on */
-		InputStream is = new ByteArrayInputStream(file.getBytes(StandardCharsets.UTF_8));
+		InputStream is = new ByteArrayInputStream(file.getBytes(Charset.forName("UTF-8")));
 		return JavaParser.parse(is);
 	}
 	
