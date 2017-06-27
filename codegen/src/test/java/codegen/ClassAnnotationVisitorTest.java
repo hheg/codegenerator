@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -239,7 +239,7 @@ public class ClassAnnotationVisitorTest {
 		String file = "package test;" + "public class TestClass {" + "	public String field;"
 				+ " 	public void method(){}" + "}";
 		/* @formatter:on */
-		InputStream is = new ByteArrayInputStream(file.getBytes(StandardCharsets.UTF_8));
+		InputStream is = new ByteArrayInputStream(file.getBytes(Charset.forName("UTF-8")));
 		return JavaParser.parse(is);
 	}
 

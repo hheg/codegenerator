@@ -18,10 +18,10 @@ package codegen;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -40,12 +40,12 @@ import codegen.Configuration.ClazzContainer;
 public class CodeGenerator {
 
 	private final InternalConfiguration config;
-	private final String encoding;
+	private final Charset encoding;
 
 	public CodeGenerator(final File configFile) throws IOException, ParseException {
 		Utils.assertParamNotNull(configFile, "configFile");
-		final Configuration parsedConfig = Configuration.parse(configFile);
-		this.encoding = parsedConfig.getEncoding() != null ? parsedConfig.getEncoding() : "UTF-8";
+		final Configuration parsedConfig = Configuration.parse(configFile);		
+		this.encoding = Charset.forName(parsedConfig.getEncoding() != null ? parsedConfig.getEncoding() : "UTF-8");		
 		config = validate(parsedConfig.getClasses());
 	}
 
@@ -113,7 +113,7 @@ public class CodeGenerator {
 		if (!targetFile.exists()) {
 			throw new FileNotFoundException(targetFile.toString());
 		}
-		final CompilationUnit cu = JavaParser.parse(targetFile, encoding);
+		final CompilationUnit cu = JavaParser.parse(targetFile, encoding.name());
 		final ClassAnnotationVisitor visitor = new ClassAnnotationVisitor(config);
 		visitor.visit(cu, null);
 		if (visitor.hasChanged()) {
@@ -123,14 +123,17 @@ public class CodeGenerator {
 	}
 
 	private void writeFile(final CompilationUnit cu, final File targetFile) throws IOException {
-		final BufferedWriter newBufferedWriter = Files.newBufferedWriter(targetFile.toPath(), Charset.forName(encoding),
-				StandardOpenOption.TRUNCATE_EXISTING);
-		try {
-			newBufferedWriter.write(cu.toString());
-		} finally {
-			if (newBufferedWriter != null) {
-				newBufferedWriter.close();
+		if (targetFile.exists()) {
+			if (!targetFile.delete()) {
+				throw new IOException("Couldn't delete file " + targetFile.getAbsolutePath());
 			}
+		}
+		final BufferedWriter fileOutput = new BufferedWriter(
+				new OutputStreamWriter(new FileOutputStream(targetFile), encoding));
+		try {
+			fileOutput.write(cu.toString());
+		} finally {
+			fileOutput.close();
 		}
 	}
 }

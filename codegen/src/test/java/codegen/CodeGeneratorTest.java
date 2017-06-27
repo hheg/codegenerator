@@ -17,17 +17,14 @@ package codegen;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
+import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -56,6 +53,7 @@ public class CodeGeneratorTest {
 		files.add(new Pair<String>("src/test/resources/codegen/TestClass.java", "target/test/codegen/TestClass.java"));
 		files.add(new Pair<String>("src/test/resources/codegen/NestedTestClass.java","target/test/codegen/NestedTestClass.java"));
 		files.add(new Pair<String>("src/test/resources/codegen/TestObject.java", "target/test/codegen/TestObject.java"));
+		files.add(new Pair<String>("src/test/resources/codegen/CorruptJavaFile.java","target/test/codegen/CorruptJavaFile.java"));
 	}
 
 	@Before
@@ -66,21 +64,11 @@ public class CodeGeneratorTest {
 	}
 
 	private void copy(String source, String dest) throws IOException {
-		Path fileToCopy = Paths.get(source).toAbsolutePath();
-		assertTrue("File " + fileToCopy.toString() + " doesn't exist", fileToCopy.toFile().exists());
-		Path destination = Paths.get(dest).toAbsolutePath();
-		destination.getParent().toFile().mkdirs();
-		Files.copy(fileToCopy, destination, StandardCopyOption.REPLACE_EXISTING);
-	}
-
-	@After
-	public void tearDown() throws IOException {
-		for (Pair<String> p : files) {
-			Path absolutePath = Paths.get(p.right).toAbsolutePath();
-			if (absolutePath.toFile().exists()) {
-				// Files.delete(absolutePath);
-			}
-		}
+		File fileToCopy = new File(source).getAbsoluteFile();
+		assertTrue("File " + fileToCopy.toString() + " doesn't exist", fileToCopy.exists());
+		File destination = new File(dest).getAbsoluteFile();
+		destination.getParentFile().mkdirs();
+		FileUtils.copyFile(fileToCopy, destination);		
 	}
 
 	@Test
@@ -216,6 +204,30 @@ public class CodeGeneratorTest {
 		File actualResult = getFile("src/test/resources/codegen/TestObjectResult.java");
 		assertEquals(JavaParser.parse(actualResult), JavaParser.parse(targetFile));
 	}
+	
+	@Test
+	public void testAListOfFiles() throws IOException, ParseException, ParseExceptions {
+		CodeGenerator cg = new CodeGenerator(getFile("src/test/resources/codegen/cfg_severalannotationsbug.json"));
+		List<File> parse = cg.parse(getFile(files.get(0).right), getFile(files.get(2).right));
+		assertTrue(parse.size() == 1);
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testToParseANotExistingFile() throws IOException, ParseException {
+		CodeGenerator cg = new CodeGenerator(getFile("src/test/resources/codegen/cfg_severalannotationsbug.json"));
+		cg.parse((File) null);
+	}
+	
+	@Test(expected = ParseExceptions.class)
+	public void testParsingAMalformedFile() throws IOException, ParseException, ParseExceptions {
+		CodeGenerator cg = new CodeGenerator(getFile("src/test/resources/codegen/cfg_severalannotationsbug.json"));
+		try {
+			cg.parse(new File[] { getFile(files.get(3).right), getFile(files.get(0).right) });
+		} catch (ParseExceptions e) {
+			assertEquals(1, e.getExceptions().size());
+			throw e;
+		}
+	}
 
 	private CompilationUnit getExpectedNestedSource() {
 		CompilationUnit cu = new CompilationUnit();
@@ -250,7 +262,7 @@ public class CodeGeneratorTest {
 	}
 
 	private File getFile(String string) {
-		return Paths.get(string).toAbsolutePath().toFile();
+		return new File(string).getAbsoluteFile();
 	}
 
 	private CompilationUnit getExpectedSource() {
