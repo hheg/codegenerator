@@ -29,6 +29,13 @@ public class CodeGenMojo extends AbstractMojo {
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		getLog().info("Running CodeGen...");
+		if (!srcDirectory.exists()) {
+			throw new MojoExecutionException(String.format("%s does not exist", srcDirectory.getName()));
+		}
+
+		if (!srcDirectory.isDirectory()) {
+			throw new MojoExecutionException(String.format("%s is not a directory", srcDirectory.getName()));
+		}
 		final List<File> files = listFilesForFolder(srcDirectory);
 		final List<File> filesForProcessing = getFilesForProcessing(files);
 		if (filesForProcessing.isEmpty()) {
