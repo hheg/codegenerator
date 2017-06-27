@@ -5,7 +5,7 @@ Example configuration:
   <plugin>
     <groupId>codegen</groupId>
     <artifactId>codegen-maven-plugin</artifactId>
-    <version>${codegen.verison}</version>
+    <version>${codegen.version}</version>
     <executions>
        <execution>
           <id>annotate</id>
