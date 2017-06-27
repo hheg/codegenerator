@@ -96,9 +96,6 @@ public class CodeGenMojo extends AbstractMojo {
 	}
 
 	private List<File> listFilesForFolder(File srcDirectory2) {
-		if (!srcDirectory.isDirectory()) {
-			throw new IllegalArgumentException("argument is not a directory");
-		}
 		List<File> files = new ArrayList<File>();
 		for (File file : srcDirectory2.listFiles(getFileFilter())) {
 			if (file.isDirectory()) {
